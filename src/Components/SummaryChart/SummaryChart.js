@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, Tooltip } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Legend, Tooltip,ResponsiveContainer } from 'recharts';
 import CustomizedTooltip from '../CustomizedTooltip/CustomizedTooltip'
 
 const data = [
@@ -12,6 +12,16 @@ const data = [
     {name:'יום שבת', תומכים:256000,מתלבטים:145000, מתנגדים:114000,חסר:370000,פעילים: 137000},
 
 ];
+
+const dayOfWeek = [
+    {1: 'יום ראשון'},
+    {2: 'יום שני'},
+    {3: 'יום שלישי'},
+    {4: 'יום רביעי'},
+    {5: 'יום חמישי'},
+    {6: 'יום שישי'},
+    {7: 'יום שבת'},
+]
 
 const styles = {
     chart: {
@@ -28,7 +38,6 @@ const styles = {
         display: 'flex',
         justifyContent: 'flex-end',
         height:'100%',
-        width: '100%',
         marginRight: '30px',
     }
 }
@@ -41,8 +50,17 @@ class SummaryChart extends Component {
         }
     }
 
+    getDateFormat(date){
+        let day = date.getDay();
+        let month = date.getMonth();
+        let year = date.getFullYear();
+        let newDate = `${day}.${month}.${year}`
+
+        return newDate;
+    }
+
     render(){
-      
+     
         // let lines =  data.map(el => {
         //     console.log(el.dataKey)})
         //     if(el.dataKey === 'חסר'){
@@ -59,21 +77,23 @@ class SummaryChart extends Component {
             <div style={styles.chartTitle}>
                 <h2 style={{position:'absolute'}}>דוח מסכם</h2>
             </div>
-            <div>
-               <LineChart width={1300} height={420} data={data}
-                     margin={{ top: 25, right: 0, left: 20, bottom: 5 }}>
-                    <CartesianGrid />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip content={<CustomizedTooltip data={data} />}/>
-                       <Legend verticalAlign="top" margin={{top:0, right:0, left:0,bottom:50}} style={{marginBottom:'20px'}}/>
-                    <Line type="monotone" dataKey="תומכים" stroke="#33adff" />
-                    <Line type="monotone" dataKey="מתלבטים" stroke="#ff751a" />
-                    <Line type="monotone" dataKey="מתנגדים" stroke="#00cc99" />
-                    <Line name="לא ידוע" type="monotone" dataKey="חסר" stroke="#ffcc00" />
-                    <Line type="monotone" dataKey="פעילים" stroke="#b366ff" />  
-                </LineChart>
-            </div>
+            
+                <ResponsiveContainer width="100%" height={420} >
+                <LineChart width={1300} height={420} data={data}
+                        margin={{ top: 15, right: 0, left: 20, bottom: 5 }}>
+                        <CartesianGrid />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip content={<CustomizedTooltip data={data} />}/>
+                        <Legend verticalAlign="top" align="left" wrapperStyle={{top:"-8px"}}/>
+                        <Line type="monotone" dataKey="תומכים" stroke="#33adff" />
+                        <Line type="monotone" dataKey="מתלבטים" stroke="#ff751a" />
+                        <Line type="monotone" dataKey="מתנגדים" stroke="#00cc99" />
+                        <Line name="לא ידוע" type="monotone" dataKey="חסר" stroke="#ffcc00" />
+                        <Line type="monotone" dataKey="פעילים" stroke="#b366ff" />  
+                    </LineChart>
+                </ResponsiveContainer>
+            
                 
             </div>
            

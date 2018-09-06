@@ -28,6 +28,6 @@ main{
   flex-direction: column;
 }
 
-.recharts-wrapper .recharts-surface .recharts-legend-wrapper{
-  top:-2,
+.recharts-responsive-container.recharts-wrapper.recharts-surface.recharts-legend-wrapper{
+  top:-2 !important
 }
